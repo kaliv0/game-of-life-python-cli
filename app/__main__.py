@@ -1,27 +1,29 @@
-import sys
+import argparse
 
-from app import views, patterns
+from app import patterns
 from app.cli import get_command_line_args
+from app.patterns import Pattern
+from app.views import CursesView
 
 
 def main():
     args = get_command_line_args()
-    # TODO: unnecessary -> only one view available
-    View = getattr(views, args.view)
+    if args.gen <= 0 or args.fps <= 0:
+        raise argparse.ArgumentTypeError(
+            "Generation count and frame rate must be greater than zero"
+        )
 
     if args.all:
-        for pattern in patterns.get_all_patterns():
-            _show_pattern(View, pattern, args)
+        while True:
+            for pattern in patterns.get_all_patterns():
+                _show_pattern(pattern, args)
     else:
-        _show_pattern(View, patterns.get_pattern(name=args.pattern), args)
+        while True:
+            _show_pattern(patterns.get_pattern(name=args.pattern), args)
 
 
-def _show_pattern(View, pattern, args):
-    try:
-        View(pattern=pattern, generation_count=args.gen, frame_rate=args.fps).render()
-    except Exception as e:
-        # TODO: refactor error loging
-        print(e, file=sys.stderr)
+def _show_pattern(pattern: Pattern, args: argparse.Namespace) -> None:
+    CursesView(pattern=pattern, generation_count=args.gen, frame_rate=args.fps).render()
 
 
 if __name__ == "__main__":

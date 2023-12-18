@@ -21,18 +21,10 @@ class CellState:
 
 
 class Grid:
-    """
-    represents 'life pool'
-    """
-
     def __init__(self, pattern):
         self.pattern = pattern
 
-    def evolve(self):
-        """
-        calculates next generation
-        """
-
+    def evolve(self) -> None:
         living_neighbours = collections.defaultdict(int)
         # determine number of living neighbours for every cell
         for row, col in self.pattern.living_cells:
@@ -54,18 +46,11 @@ class Grid:
 
         self.pattern.living_cells = total_survivors | new_offspring  # union of both sets
 
-    def as_string(self, bbox):
-        """
-        used for displaying grid in terminal
-        """
-        start_col, start_row, end_col, end_row = bbox  # TODO: change order -> rows before columns
+    def prepare_grid_view(self, bbox: tuple[int]) -> str:
+        start_row, start_col, end_row, end_col = bbox
         display = [self.pattern.name.center(2 * (end_col - start_col))]
 
         for row in range(start_row, end_row):
-            # display_row = [
-            #     CellState.ALIVE if (row, col) in self.pattern.living_cells else CellState.DEAD
-            #     for col in range(start_col, end_col)
-            # ]
             display_row = []
             for col in range(start_col, end_col):
                 if (row, col) in self.pattern.living_cells:

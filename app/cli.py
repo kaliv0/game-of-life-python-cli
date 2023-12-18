@@ -1,9 +1,9 @@
 import argparse
 
-from app import views, __version__, patterns
+from app import __version__, patterns
 
 
-def get_command_line_args():
+def get_command_line_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         prog="game-of-life",
         description="Conway's Game of Life CLI application",
@@ -24,18 +24,11 @@ def get_command_line_args():
         help="show all available patterns",
     )
     parser.add_argument(
-        "-v",
-        "--view",
-        choices=views.__all__,
-        default="CursesView",
-        help="display life grid in a specific view (default: %(default)s)",
-    )  # TODO: unnecessary?
-    parser.add_argument(
         "-g",
         "--gen",
         metavar="GENERATIONS_COUNT",
         type=int,
-        default=10,
+        default=8,
         help="number of generations (default: %(default)s)",
     )
     parser.add_argument(

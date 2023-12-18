@@ -17,4 +17,4 @@ gol = "app.__main__:main"
 version = { attr = "app.__version__" }
 
 [tool.setuptools.package-data]
-'app' = ['*.toml']
+'app' = ['resources/*.toml']
