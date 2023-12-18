@@ -58,3 +58,21 @@ class Grid:
         """
         used for displaying grid in terminal
         """
+        start_col, start_row, end_col, end_row = bbox  # TODO: change order -> rows before columns
+        display = [self.pattern.name.center(2 * (end_col - start_col))]
+
+        for row in range(start_row, end_row):
+            # display_row = [
+            #     CellState.ALIVE if (row, col) in self.pattern.living_cells else CellState.DEAD
+            #     for col in range(start_col, end_col)
+            # ]
+            display_row = []
+            for col in range(start_col, end_col):
+                if (row, col) in self.pattern.living_cells:
+                    curr_state = CellState.ALIVE
+                else:
+                    curr_state = CellState.DEAD
+                display_row.append(curr_state)
+            display.append(" ".join(display_row))
+
+        return "\n ".join(display)
