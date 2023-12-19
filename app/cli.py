@@ -5,7 +5,7 @@ from app import __version__, patterns
 
 def get_command_line_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        prog="game-of-life",
+        prog="gol",
         description="Conway's Game of Life CLI application",
     )
 
