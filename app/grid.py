@@ -14,7 +14,7 @@ NEIGHBOUR_DELTAS = (
 )
 
 
-@dataclass
+@dataclass(frozen=True)
 class CellState:
     DEAD = " "
     ALIVE = "#"
