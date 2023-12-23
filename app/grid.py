@@ -1,4 +1,4 @@
-import collections
+from collections import defaultdict
 from dataclasses import dataclass
 
 # deltas used to determine neighbours' coordinates for each cell
@@ -25,7 +25,7 @@ class Grid:
         self.pattern = pattern
 
     def evolve(self) -> None:
-        living_neighbours = collections.defaultdict(int)
+        living_neighbours: defaultdict = defaultdict(int)
         # determine number of living neighbours for every cell
         for row, col in self.pattern.living_cells:
             for dlt_row, dlt_col in NEIGHBOUR_DELTAS:
@@ -46,7 +46,7 @@ class Grid:
 
         self.pattern.living_cells = total_survivors | new_offspring  # union of both sets
 
-    def prepare_grid_view(self, bbox: tuple[int]) -> str:
+    def prepare_grid_view(self, bbox: tuple[int, ...]) -> str:
         start_row, start_col, end_row, end_col = bbox
         display = [self.pattern.name.center(2 * (end_col - start_col))]
 

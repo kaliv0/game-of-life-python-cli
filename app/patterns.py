@@ -11,18 +11,18 @@ DATA_ENCODING = "utf-8"
 @dataclass
 class Pattern:
     name: str
-    living_cells: set[tuple[int]]
+    living_cells: set[tuple[int, ...]]
 
     @classmethod
     def init_from_toml(cls, name: str, data: dict):
         return cls(name=name, living_cells={tuple(cell) for cell in data["living_cells"]})
 
 
-def get_pattern(name: str, filename: pathlib.PosixPath = PATTERNS_FILE) -> Pattern:
+def get_pattern(name: str, filename: pathlib.Path = PATTERNS_FILE) -> Pattern:
     data = tomllib.loads(filename.read_text(encoding=DATA_ENCODING))
     return Pattern.init_from_toml(name, data[name])
 
 
-def get_all_patterns(filename: pathlib.PosixPath = PATTERNS_FILE) -> List[Pattern]:
+def get_all_patterns(filename: pathlib.Path = PATTERNS_FILE) -> List[Pattern]:
     data = tomllib.loads(filename.read_text(encoding=DATA_ENCODING))
     return [Pattern.init_from_toml(name, data) for name, data in data.items()]

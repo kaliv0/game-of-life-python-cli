@@ -11,7 +11,7 @@ class CursesView:
         pattern: Pattern,
         generation_count: int = 8,
         frame_rate: int = 4,
-        bbox: tuple[int] = (0, 0, 20, 20),
+        bbox: tuple[int, ...] = (0, 0, 20, 20),
     ):
         self.pattern = pattern
         self.generation_count = generation_count
